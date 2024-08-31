@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome - Code Arena{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'core/css/base.css' %}" />
+{% endblock %}
+{% block content %}
+  <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center my-4">
+    <div class="border border-danger bg-white p-5 rounded text-center mb-4">
+      <h1 class="display-4 fw-bold text-dark">Code Arena</h1>
+      <p class="fs-5 text-secondary mt-2">Your ultimate coding challenge platform.</p>
+      <a href="{% url 'issues:issues' %}" class="btn bg-maroon-500 text-white fw-bold py-2 px-4 rounded-pill mt-4" type="button">Start solving</a>
+    </div>
+  </main>
+{% endblock %}

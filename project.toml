@@ -1,0 +1,31 @@
+[project]
+schema-version = "0.2"
+id = "io.buildpacks.camp-python-2024-codearena-backend"
+name = "Code Arena"
+version = "0.0.0"
+
+[[build.env]]
+name = "BP_CPYTHON_VERSION"
+value = "3.12.*"
+
+[build]
+exclude = [
+    ".venv",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".git",
+    ".github",
+    ".gitlint",
+    ".gitignore",
+    ".pre-commit-config.yaml",
+    ".env.local",
+    "docker-compose.yaml",
+    ".vscode",
+    ".cruft.json",
+    "/tasks.py",
+    "*.sql",
+    "README.md",
+    "docs/*",
+    "!docs/CHANGELOG.md",
+    "apps/issues/services/docker_test_runner/execution_files/*"
+]

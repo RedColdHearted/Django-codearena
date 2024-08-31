@@ -1,0 +1,28 @@
+name: Check commit style
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  commit-style:
+    runs-on: saritasa-rocks-eks
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup python
+        uses: ./.github/actions/setup_python
+        with:
+          poetry-groups: "commit-style"
+          cache-pre-commit: false
+      - name: Check commit style
+        if: ${{ github.base_ref != '' }}
+        # Ignore branch rule since GitHub actions create it's own merge branch
+        # Ignore WIP/wip ignore rule
+        run: |
+          poetry run gitlint --commits "origin/${{github.base_ref}}..origin/${{github.head_ref}}" -c general.ignore=UC1 -c ignore-by-title.regex="^\[automated-commit]"

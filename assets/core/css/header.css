@@ -1,0 +1,16 @@
+.nav-pills .nav-link.active {
+  background-color: #800000;
+  color: white;
+  border: 1px solid #800000;
+}
+
+.nav-pills .nav-link {
+  color: black;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: transparent;
+  color: black;
+}

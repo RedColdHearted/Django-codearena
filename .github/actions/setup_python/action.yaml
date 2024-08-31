@@ -1,0 +1,64 @@
+name: Setup python
+description: "Setup python and poetry. Cache poetry env, mypy and pre-commit."
+inputs:
+  version:
+    description: "Version of python"
+    required: false
+    default: "3.12"
+  poetry-groups:
+    description: "Groups to install, if empty install all"
+    required: false
+    default: ""
+  cache-pre-commit:
+    description: "Should we cache pre-commit"
+    required: false
+    default: 'true'
+outputs:
+  cache-prefix:
+    description: "Prefix for cache"
+    value: ${{ steps.set-cache-prefix.outputs.cache-prefix }}
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      id: install-python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "${{ inputs.version }}"
+    - name: Set cache prefix in env
+      id: set-cache-prefix
+      shell: bash
+      run: echo "cache-prefix=${{ runner.os }}-${{ github.job }}-${{ steps.install-python.outputs.python-version }}" >> $GITHUB_OUTPUT
+    - name: Cache mypy
+      if: inputs.cache-mypy == 'true'
+      uses: actions/cache@v4
+      with:
+        path: "**/.mypy_cache"
+        key: ${{ steps.set-cache-prefix.outputs.cache-prefix }}-mypy-${{ hashFiles('**/poetry.lock') }}
+    - name: Cache pre-commit
+      if: inputs.cache-pre-commit == 'true'
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pre-commit
+        key: ${{ steps.set-cache-prefix.outputs.cache-prefix }}-pre-commit-${{ hashFiles('**/.pre-commit-config.yaml') }}
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+        installer-parallel: true
+    - name: Cache poetry
+      id: cache-poetry
+      uses: actions/cache@v4
+      with:
+        path: .venv
+        key: ${{ steps.set-cache-prefix.outputs.cache-prefix }}-poetry-${{ hashFiles('**/poetry.lock') }}
+    - name: Install dependencies
+      shell: bash
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true' && inputs.poetry-groups == ''
+      run: poetry install --no-interaction
+    - name: Install dependencies (${{inputs.poetry-groups}})
+      shell: bash
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true' && inputs.poetry-groups != ''
+      run: poetry install --no-interaction --only=${{inputs.poetry-groups}}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load reward_emojis %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'users/css/profile.css' %}" />
+{% endblock %}
+{% block content %}
+  <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center my-4">
+    <div class="border border-danger bg-white p-5 rounded text-center mb-4">
+      <h1 class="display-4 fw-bold text-dark">Leaders Board</h1>
+      <p class="fs-5 text-secondary mt-2">Top performers in solving challenges.</p>
+      <table class="table mt-4">
+        <thead class="bg-maroon-500 text-white">
+          <tr>
+            <th scope="col">Position</th>
+            <th scope="col">Username</th>
+            <th scope="col">Solved Tasks</th>
+            <th scope="col">Scores</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in page_obj %}
+            {% with total_position=forloop.counter0|add:page_obj.start_index %}
+              <tr class="user-row" href>
+                <th scope="row">{{ total_position }}</th>
+                <td>
+                  <a class="text-dark text-decoration-none" href="{% url 'users:profile' username=user.username %}">
+                    {% if user.rank < 4 %}
+                      {{ user.username|reward_emojis:user.rank }}
+                    {% else %}
+                      {{ user.username }}
+                    {% endif %}
+                  </a>
+                </td>
+                <td>{{ user.solved_issues_count }}</td>
+                <td>{{ user.total_scores }}</td>
+              </tr>
+            {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% include 'includes/paginator.html' %}
+    </div>
+  </main>
+{% endblock %}

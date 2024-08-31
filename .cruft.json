@@ -1,0 +1,17 @@
+{
+  "template": "git@github.com:saritasa-nest/saritasa-python-boilerplate-django.git",
+  "commit": "7ae1e670259516451a97cf233d00eb131adfac24",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "Code Arena",
+      "jira_key": "PYCAMP",
+      "subdomain": "code-arena",
+      "repo_name": "camp-python-2024-codearena-backend",
+      "repo_frontend_name": "camp-python-2024-codearena-frontend",
+      "python_version": "3.12",
+      "_template": "git@github.com:saritasa-nest/saritasa-python-boilerplate-django.git"
+    }
+  },
+  "directory": null
+}

@@ -1,0 +1,113 @@
+.bg-maroon-500 { background-color: #800000; }
+.bg-orange-500 { background-color: #ff3c00; }
+.light-grey-bg { background-color: #f5f5f5; }
+
+.border-custom { border: #ff4400; }
+.border-bottom { border-color: #2c2c2c; }
+.custom-border { border-color: #800000 !important; }
+
+tr.user-row:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.code-section {
+  background: #333;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.problem-header,
+.solution-header,
+.problem-content,
+.solution-content {
+  margin-top: 20px;
+}
+
+.header-space { margin-top: 10px; }
+
+main {
+  background: #2c2c2c;
+  color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 5%;
+  margin-top: 0 !important;
+  width: 90%;
+}
+
+header { background-color: #2c2c2c; }
+
+a.issue-link { margin-left: 0; }
+a.profile-link { margin-right: 0; }
+
+.tag {
+  display: inline-block;
+  background-color: #f5f5f5;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin: 2px;
+  font-size: 0.82em;
+}
+
+.tags { margin-bottom: 10px; }
+
+.smaller-text { font-size: 0.92em; }
+
+.tab-section-button {
+  background: #333;
+  border: none;
+  font-size: 0.9em;
+}
+
+.container {
+  padding: 0;
+  height: auto;
+}
+
+.language-selection {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.solution-content form { margin-top: 10px; }
+
+.test-results-content { margin-top: 2rem; }
+.result-display pre { margin: 0; }
+
+.float-end { float: right; margin-left: 10px; }
+
+.modal-content {
+  background-color: #333;
+  border: 2px solid #800000;
+  color: white;
+}
+.modal-header, .modal-footer {
+  background-color: #444;
+}
+.modal-title {
+  color: white;
+}
+.-modal-btn-secondary {
+  background-color: #800000;
+  border: none;
+}
+.modal-btn-secondary:hover {
+  background-color: #900000;
+}
+.modal-body {
+  border: none;
+}
+.like-button {
+  color: gray;
+  font-size: 2rem;
+  transition: color 0.3s;
+  font-size: 16px;
+}
+.liked {
+  color: green;
+}

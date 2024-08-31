@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'users/css/profile.css' %}" />
+{% endblock %}
+{% block content %}
+  <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center my-4">
+    <div class="border border-dark p-3 rounded mb-2 w-75 d-flex custom-bg-user">
+      <!-- Left Side: User Avatar and Nickname -->
+      <div class="me-4 d-flex flex-column align-items-center">
+        <div class="me-4 d-flex flex-column align-items-center">
+          {% if user.avatar %}
+            <img class="profile-avatar mb-3 is-rounded" src="{{ user.avatar.url }}" alt="Profile Photo" />
+          {% endif %}
+          <h1 class="fw-bold text-dark">{{ user.username }}</h1>
+          <h4 class="fw-bold text-dark">{{ user.email }}</h4>
+          <p class="text-muted bg-light-gray p-1 rounded-3">Joined on: {{ user.created|date:'M d, Y' }}</p>
+        </div>
+      </div>
+      <!-- Right Side: Additional Information -->
+      <div class="flex-grow-1 d-flex flex-column justify-content-center">
+        <div class="my-4 text-center">
+          <h4 class="text-dark">About {{ user.username }}</h4>
+          <div class="d-flex justify-content-around">
+            <div>
+              <h5>Challenges Solved</h5>
+              <p class="fw-bold">{{ user.solved_issues_count }}</p>
+            </div>
+            <div>
+              <h5>Rank</h5>
+              <p class="fw-bold">{{ user.rank }}</p>
+            </div>
+          </div>
+        </div>
+        {% if request.user == user %}
+          <a class="btn bg-maroon-500 text-white fw-bold px-4 rounded-pill align-self-center" href="{% url 'users:update' %}">Edit Profile</a>
+        {% endif %}
+      </div>
+    </div>
+    <!-- bottom div -->
+    <div class="flex-grow-1 d-flex w-75">
+      <!-- User Contributions Section -->
+      <div class="border border-none p-3 rounded me-2 flex-grow-1 custom-bg-activity">
+        <h2 class="fw-bold text-dark mb-4">Recent Activity</h2>
+        <div class="list-group mb-4">
+          {% for solved_issue in page_obj %}
+            <a href="{% url 'issues:issue-solve' solved_issue.issue.id %}" class="list-group-item list-group-item-action">
+              <span>Solved {{ solved_issue.issue.id }}. {{ solved_issue.issue.title }}</span>
+              <span class="text-muted float-end">{{ solved_issue.created|date:'M d, Y' }}</span>
+            </a>
+          {% endfor %}
+          {% include 'includes/paginator.html' %}
+        </div>
+      </div>
+      <!-- Achievements Section -->
+      <div class="border p-3 rounded ms-2 flex-grow-1 custom-bg-achievements">
+        <h2 class="fw-bold text-black mb-4">Achievements</h2>
+        <div class="container">
+          <div class="row g-3">
+            {% if user.achievements.exists %}
+              {% for achievement in user.achievements.all %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                  <div class="text-center achievement-item">
+                    <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}" class="achievement mb-2 img-fluid" />
+                    <p class="text-info bg-light-gray rounded-3">{{ achievement.title }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="text-center achievement-item">
+                  <p class="text-info bg-light-gray rounded-3">You hasn't achievements yet</p>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

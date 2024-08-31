@@ -1,0 +1,59 @@
+{% load static %}
+{% block style %}
+  <link rel="stylesheet" href="{% static 'core/css/header.css' %}" />
+{% endblock %}
+<header class="p-3 border-bottom border-4 border-maroon-500 text-center bg-white">
+  <nav class="d-flex justify-content-between align-items-center">
+    {% if request.user.is_authenticated %}
+      <div class="nav-pills d-flex align-items-center">
+        <form method="post" action="{% url 'users:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="nav-link link-light fs-5 text-decoration-none {% if view_name == 'users:logout' %} active {% endif %}">Log out</button>
+        </form>
+      </div>
+
+      <div class="container d-flex justify-content-center">
+        {% with view_name=request.resolver_match.view_name %}
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link fs-5 text-decoration-none {% if view_name == 'users:leaderboard' %}active{% endif %}" href="{% url 'users:leaderboard' %}">Leaders Board</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 text-decoration-none {% if view_name == 'issues:issues' %}active{% endif %}" href="{% url 'issues:issues' %}">Issues</a>
+            </li>
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link fs-5 text-decoration-none {% if view_name == 'users:profile' %}active{% endif %}" href="{% url 'users:profile' username=request.user.username %}">Profile</a>
+              </li>
+            {% endif %}
+          </ul>
+        {% endwith %}
+      </div>
+
+      <div class="d-flex align-items-center">
+        <span class="fs-5">user: {{ request.user.username }}</span>
+        {% if request.user.avatar_thumbnail %}
+          <img src="{{ request.user.avatar_thumbnail.url }}" alt="Profile Photo" width="50" height="auto" class="img-fluid rounded-circle align-self-center ms-3" />
+        {% else %}
+          <img src="https://avatar.iran.liara.run/username?username={{ request.user.username }}&background=800000&color=FFFFFF&length=1" alt="Profile Photo" width="50" height="auto" class="img-fluid rounded-circle align-self-center ms-3" />
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="container d-flex justify-content-center">
+        {% with view_name=request.resolver_match.view_name %}
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link fs-5 text-decoration-none {% if view_name == 'users:leaderboard' %}active{% endif %}" href="{% url 'users:leaderboard' %}">Leaders Board</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 text-decoration-none {% if view_name == 'users:login' %}active{% endif %}" href="{% url 'users:login' %}">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-5 text-decoration-none {% if view_name == 'users:signup' %}active{% endif %}" href="{% url 'users:signup' %}">Register</a>
+            </li>
+          </ul>
+        {% endwith %}
+      </div>
+    {% endif %}
+  </nav>
+</header>

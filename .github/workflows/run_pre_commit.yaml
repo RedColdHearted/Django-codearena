@@ -1,0 +1,45 @@
+name: Run pre-commit hooks
+
+on:
+  pull_request:
+  push:
+    branches: [
+      main,
+      staging,
+      develop
+    ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Fallback to plain text output for reducing docker output
+  # https://github.com/docker/compose/issues/8753#issuecomment-934473781
+  BUILDKIT_PROGRESS: plain
+
+jobs:
+  cr:
+    runs-on: saritasa-rocks-eks
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup docker
+      uses: ./.github/actions/setup_docker
+      with:
+        docker-hub-username: ${{ secrets.SARITASA_LLC_DOCKERHUB_USERNAME }}
+        docker-hub-password: ${{ secrets.SARITASA_LLC_DOCKERHUB_TOKEN }}
+    - name: Setup python
+      uses: ./.github/actions/setup_python
+    - name: Prepare CI env
+      run: |
+        poetry run inv ci.prepare
+    # Granting access to a file because of pre-commit hooks in `cr`
+    # runs by user that doesn't have access to edit directory with files that
+    # needs to testing solution.
+    - name: Grand access to tests folder
+      run: |
+        sudo chmod 777 apps/issues/services/processing_solutions/execution_files
+    - name: Run checks
+      run: |
+        poetry run inv pre-commit.run-hooks

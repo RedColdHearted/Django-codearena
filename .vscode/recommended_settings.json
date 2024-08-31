@@ -1,0 +1,52 @@
+{
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+  },
+
+  "editor.rulers": [79],
+
+  "editor.bracketPairColorization.enabled": true,
+
+  "python.analysis.typeCheckingMode": "basic",
+
+  "python.analysis.inlayHints.functionReturnTypes": true,
+
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+
+  "gitlens.autolinks": [
+    {
+      "prefix": "PYCAMP-",
+      "url": "https://saritasa.atlassian.net/browse/PYCAMP-<num>"
+    },
+    {
+      "prefix": "SA3P-",
+      "url": "https://saritasa.atlassian.net/browse/SA3P-<num>"
+    },
+    {
+      "prefix": "SD-",
+      "url": "https://saritasa.atlassian.net/browse/SD-<num>"
+    }
+  ],
+
+  "[python]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "postgres",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "database": "camp-python-2024-codearena-backend-dev",
+      "username": "camp-python-2024-codearena-backend-user",
+      "password": "manager",
+      "name": "camp-python-2024-codearena-backend-dev"
+    },
+  ],
+}

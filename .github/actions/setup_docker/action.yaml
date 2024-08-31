@@ -1,0 +1,34 @@
+name: Setup docker
+description: "Setup docker and cache images"
+inputs:
+  docker-hub-username:
+    description: "Username to docker hub"
+    required: true
+  docker-hub-password:
+    description: "Password to docker hub"
+    required: true
+  cache-images:
+    description: "Should we cache images"
+    required: false
+    default: 'true'
+  cache_key_file:
+    description: "Path to file which will be used as key"
+    required: false
+    default: '**/docker-compose.yaml'
+outputs:
+  cache-prefix:
+    description: "Prefix for cache"
+    value: ${{ steps.set-cache-prefix.outputs.cache-prefix }}
+runs:
+  using: "composite"
+  steps:
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ inputs.docker-hub-username }}
+        password: ${{ inputs.docker-hub-password }}
+    - name: Cache Docker images
+      uses: ScribeMD/docker-cache@0.5.0
+      if: inputs.cache-images == 'true'
+      with:
+          key: ${{ runner.os }}-${{ github.job }}-docker-${{ hashFiles(inputs.cache-images) }}

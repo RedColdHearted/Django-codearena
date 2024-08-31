@@ -1,0 +1,34 @@
+.bg-maroon-500 {
+  background-color: #800000;
+}
+.bg-light-gray {
+  background-color: #f8f9fa;
+}
+.profile-avatar {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.achievement {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+body {
+  background: url('/static/1and0background.jpg') no-repeat center center;
+  background-size: cover;
+}
+.custom-bg-user {
+  background-color: #4d4d4da1;
+}
+.custom-bg-activity {
+  background-color: #7dff6c5d;
+}
+.custom-bg-achievements {
+  background-color: #ecae3b5d;
+}
+.achievement-item {
+  width: 150px;
+  margin: 10px;
+}

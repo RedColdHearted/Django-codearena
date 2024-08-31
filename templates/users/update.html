@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Update profile
+{% endblock %}
+{% block style %}
+  <link rel="stylesheet" href="{% static 'users/css/update.css' %}" />
+{% endblock %}
+{% block content %}
+  <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center my-4">
+    <div class="border border-danger bg-white p-5 rounded text-center">
+      <h2 class="display-6 fw-bold text-dark">Update</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="d-flex justify-content-center gap-5">
+          <a class="btn bg-maroon-500 text-white fw-bold px-4 rounded-pill align-self-center" href="{% url 'users:profile' username=request.user.username %}">Return back</a>
+          <button type="submit" class="btn bg-maroon-500 text-white fw-bold px-4 rounded-pill align-self-center">Update</button>
+        </div>
+      </form>
+    </div>
+  </main>
+{% endblock %}
