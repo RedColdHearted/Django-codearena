@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from django_filters.views import FilterView
 
@@ -29,7 +29,7 @@ class IssueListView(FilterView):
     filterset_class = filters.IssueFilter
     context_object_name = "issues"
 
-class IssueSolveView(LoginRequiredMixin, DetailView, CreateView):
+class IssueSolveView(LoginRequiredMixin, DetailView, CreateView, UpdateView):
     """View that provides feature to solve issue."""
 
     model = models.Issue

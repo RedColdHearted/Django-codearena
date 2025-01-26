@@ -1,6 +1,7 @@
 from typing import Self
 
 from django.db import models
+from django.db.models import IntegerField
 
 from .constants import Scores
 
@@ -59,5 +60,6 @@ class UserQuerySet(models.QuerySet):
                         start=1,
                     )
                 ],
+                output_field=IntegerField(),
             ),
         )

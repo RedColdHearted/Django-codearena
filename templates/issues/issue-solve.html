@@ -121,7 +121,8 @@
                     </div>
                     <div class="code-section p-2 rounded mt-2">
                       <strong>Expected Output:</strong>
-                    <pre class="m-0">{{ test_case_result.test_case.excepted_output|slice:":-2" }} </pre>
+                      <!-- |slice:":-2" -->
+                    <pre class="m-0">{{ test_case_result.test_case.excepted_output }} </pre>
                     </div>
                   </div>
                 {% endfor %}

@@ -115,8 +115,8 @@ def run_solution_with_test_case(
 ) -> models.TestCaseResult:
     """Run solution with test case and return `TestCaseResult` instance."""
     language_handler.prepare_file_to_exec(
-        solution.content,
-        test_case.input_data,
+        content=solution.content,
+        input_data=test_case.input_data,
     )
     exec_data = exec_test_by_command_line(
         container=container,
@@ -127,7 +127,6 @@ def run_solution_with_test_case(
     status = models.constants.TestResultStatus.COMPLETE
     execution_log = exec_data.execution_log
     excepted_output = test_case.excepted_output.replace("\\n", "\n")
-
     if excepted_output != execution_log:
         if not exec_data.exit_code:
             execution_log = f"{excepted_output} != {execution_log}"
@@ -148,7 +147,7 @@ def run_solution_with_test_case(
 def run_solution_with_multiple_test_cases(
     solution: models.Solution,
     test_cases: typing.Iterable[models.TestCase],
-) -> list[models.TestCase]:
+) -> list[models.TestCaseResult]:
     """Perform logic of running tests for solution."""
     tests_amount = len(test_cases)
     if not constants.MIN_TEST_CASES < tests_amount <= constants.MAX_TEST_CASES:

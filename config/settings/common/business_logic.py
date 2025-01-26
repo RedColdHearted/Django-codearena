@@ -1,1 +1,1 @@
-# This file holds settings specific to the project
+RUNSERVER_PLUS_EXCLUDE_PATTERNS = ["*solution.py"]
